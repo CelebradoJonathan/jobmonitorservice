@@ -44,8 +44,8 @@ class JobIdModel(db.Model):
         return JobIdModel.query.all()
 
     @staticmethod
-    def get_one_jobid(job_id):
-        return JobIdModel.query.filter(JobIdModel.job_id == job_id)
+    def get_one_jobid(id):
+        return JobIdModel.query.get(id)
 
     def __repr__(self):
         return '<id {}>'.format(self.id)

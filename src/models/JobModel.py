@@ -23,7 +23,7 @@ class JobModel(db.Model):
     app_name = db.Column(db.String(128), nullable=False)
     # state = db.Column(db.Enum(PossibleStates))
     state = db.Column(db.String(10))
-    created_at = db.Column(db.Integer())
+    created_at = db.Column(db.String(10))
 
     # class constructor
 
@@ -55,8 +55,17 @@ class JobModel(db.Model):
         return JobModel.query.all()
 
     @staticmethod
-    def get_one_job(id):
-        return JobModel.query.get(id)
+    def get_one_job(job_id):
+        return JobModel.query.filter(JobModel.job_id == job_id).all()
+        # # query_list = []
+        # result = JobModel.query.filter(JobModel.job_id == job_id).all()
+        #
+        # for row in result:
+        #     query_dict = {"id": row.id, "job_id": row.job_id, "app_name": row.app_name,
+        #                   "state": row.state, "created_at": row.created_at}
+        #     # query_list.append(query_dict)
+        #
+        # return query_dict
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -71,4 +80,4 @@ class JobSchema(Schema):
     job_id = fields.UUID(required=True)
     app_name = fields.Str(required=True)
     state = fields.Str(required=True)
-    created_at = fields.Int(required=True)
+    created_at = fields.Str(required=True)
