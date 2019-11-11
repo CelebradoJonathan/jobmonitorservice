@@ -14,7 +14,7 @@ flask-script = "*"
 flask-bcrypt = "*"
 pyjwt = "*"
 marshmallow-sqlalchemy = "==0.13.2"
-marshmallow = "==2.14.0"
+marshmallow = "==2.15.1"
 gunicorn = "*"
 
 [requires]
