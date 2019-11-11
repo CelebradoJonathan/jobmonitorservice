@@ -57,15 +57,10 @@ class JobModel(db.Model):
     @staticmethod
     def get_one_job(job_id):
         return JobModel.query.filter(JobModel.job_id == job_id).all()
-        # # query_list = []
-        # result = JobModel.query.filter(JobModel.job_id == job_id).all()
-        #
-        # for row in result:
-        #     query_dict = {"id": row.id, "job_id": row.job_id, "app_name": row.app_name,
-        #                   "state": row.state, "created_at": row.created_at}
-        #     # query_list.append(query_dict)
-        #
-        # return query_dict
+
+    @staticmethod
+    def get_one_job_only(id, job_id):
+        return JobModel.query.filter(JobModel.id == id and JobModel.job_id == job_id).first()
 
     def __repr__(self):
         return '<id {}>'.format(self.id)

@@ -17,7 +17,9 @@ def create():
     """
 
     req_data = request.get_json()
-    data = jobid_schema.load(req_data)
+    data, error = jobid_schema.load(req_data)
+    if error:
+        return custom_response(error, 400)
     jobid = JobIdModel(data)
     jobid.save()
     jobid_message = jobid_schema.dump(jobid)
@@ -37,32 +39,19 @@ def custom_response(res, status_code):
     )
 
 
-@jobid_api.route('/<int:id>', methods=['GET'])
-def get_a_job(id):
+@jobid_api.route('/<string:job_id>', methods=['GET'])
+def get_a_job(job_id):
     """
-    Get a single jobid
+    Get a single jobid and corresponding jobs
     """
 
-    jobid = JobIdModel.get_one_jobid(id)
-    print(jobid)
+    jobid = JobIdModel.get_one_jobid(job_id)
     if not jobid:
         return custom_response({'error': 'jobId not found'}, 404)
 
-    jobid_message = jobid_schema.dump(jobid)
+    jobid_message = jobid_schema.dump(jobid, many=True)
     return custom_response(jobid_message, 200)
-#
-#
-# @jobid_api.route('/<int:job_id>', methods=['DELETE'])
-# def delete():
-#     """
-#   Delete a user
-#   """
-#
-#     job = JobModel.get_one_job(g.job.get('id'))
-#
-#     job.delete()
-#
-#     return custom_response({'message': 'deleted'}, 204)
+
 
 
 
